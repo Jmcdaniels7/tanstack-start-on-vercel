@@ -116,7 +116,10 @@ function RouteComponent() {
             return 'Okay! Let me know if you would like me to calculate taxes again.'
 
             default:
-                return 'Hello! How can I assist you today?'
+                // Reset conversation to beginning
+                setState('awaiting_tax_request')
+                return 'Hello, my name is Jacob. How can I help you?'
+
     }
   }
 
