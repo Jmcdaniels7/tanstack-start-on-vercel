@@ -104,7 +104,7 @@ function RouteComponent() {
 
         case 'awaiting_anything_else':
             if (lowerInput.includes('no')) {
-                setState('awaiting_anything_else') // Stop prompting further
+                setState('awaiting_tax_request') // Stop prompting further
                 return 'Thanks, have a nice day!'
             }
             if (lowerInput.includes('tax')) {
