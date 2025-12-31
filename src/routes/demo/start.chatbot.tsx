@@ -64,7 +64,7 @@ function RouteComponent() {
           return 'Sure! Please include your information like so, "hours: 40, rate: 35, state: NY, county: Kings, city: NYC".'
         }
         if (lowerInput.includes('no')) {
-                setState('idle') // Stop prompting further
+                setState('awaiting_anything_else') // Stop prompting further
                 return 'Thanks, have a nice day!'
         }
         return 'I can help you calculate taxes. Please type "please calculate my taxes" to begin.'
@@ -104,7 +104,7 @@ function RouteComponent() {
 
         case 'awaiting_anything_else':
             if (lowerInput.includes('no')) {
-                setState('idle') // Stop prompting further
+                setState('awaiting_anything_else') // Stop prompting further
                 return 'Thanks, have a nice day!'
             }
             if (lowerInput.includes('tax')) {
@@ -117,8 +117,8 @@ function RouteComponent() {
 
             default:
                 // Reset conversation to beginning
-                setState('awaiting_tax_request')
-                return 'Hello, my name is Jacob. How can I help you?'
+                setState('awaiting_anything_else')
+                return 'Okay! Let me know if you would like me to calculate taxes again.'
 
     }
   }
@@ -132,7 +132,7 @@ function RouteComponent() {
       }}
     >
         <div style={{ maxWidth: 500, margin: '20px auto', fontFamily: 'sans-serif', background: '#18181b', padding: 20, borderRadius: 8 }}>
-        <h2>Tax Prepayer Chatbot Demo</h2>
+        <h2>Income Tax Chatbot</h2>
         <div
             style={{
             border: '1px solid #ccc',
@@ -141,6 +141,8 @@ function RouteComponent() {
             height: 300,
             overflowY: 'auto',
             marginBottom: 10,
+            scrollbarWidth: 'thin',
+            scrollbarColor: '#3b82f6 #15181fff',  
             }}
         >
             {messages.map((msg, idx) => (
