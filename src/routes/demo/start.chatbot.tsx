@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { Mic  } from "lucide-react";
 import React, { useState, useEffect, useRef } from 'react'
 import { FaRobot } from 'react-icons/fa'
 
@@ -161,103 +162,102 @@ Would you like help with anything else?`
   }
 
   return (
-    <div
-      className="flex items-center justify-center min-h-screen bg-gradient-to-br from-zinc-800 to-black p-4 text-white"
-      style={{
-        backgroundImage:
-          'radial-gradient(50% 50% at 20% 60%, #23272a 0%, #18181b 50%, #000000 100%)',
-      }}
-    >
-      {/* Chat container */}
-      <div
-        style={{
-          maxWidth: 500,
-          margin: '20px auto',
-          fontFamily: 'sans-serif',
-          background: '#18181b',
-          padding: 20,
-          borderRadius: 8,
-        }}
-      >
-        <h2>Income Tax Chatbot</h2>
+  <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+    <div className="w-full max-w-3xl rounded-2xl bg-white shadow-sm border border-slate-200 flex flex-col overflow-hidden">
 
-        {/* Chat message list */}
-        <div
-          style={{
-            border: '1px solid #ccc',
-            borderRadius: 8,
-            padding: 10,
-            height: 300,
-            overflowY: 'auto',
-            marginBottom: 10,
-            scrollbarWidth: 'thin',
-            scrollbarColor: '#3b82f6 #15181fff',
-          }}
-        >
-          {messages.map((msg, idx) => (
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-5 text-white">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center">
+            ✨
+          </div>
+          <div>
+            <h1 className="text-xl font-semibold">AI Financial Advisor</h1>
+            <p className="text-sm opacity-90">
+              Tax calculations & personalized financial guidance
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Chat area */}
+      <div className="flex-1 px-6 py-5 space-y-4 overflow-y-auto">
+
+        {/* Initial bot message */}
+        {messages.map((msg, idx) => (
+          <div key={idx} className="flex gap-3 items-start">
+            {msg.sender === 'bot' && (
+              <div className="h-8 w-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                <FaRobot size={14} />
+              </div>
+            )}
+
             <div
-              key={idx}
-              style={{
-                display: 'flex',
-                justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start',
-                margin: '5px 0',
-                alignItems: 'center',
-                gap: 5,
-              }}
+              className={`rounded-xl border px-4 py-3 text-sm leading-relaxed max-w-[85%] ${
+                msg.sender === 'user'
+                  ? 'ml-auto bg-blue-600 text-white border-blue-600'
+                  : 'bg-white border-slate-200 text-slate-800'
+              }`}
             >
-              {msg.sender === 'bot' && <FaRobot />}
-              <span
-                style={{
-                  display: 'inline-block',
-                  padding: '8px 12px',
-                  borderRadius: 15,
-                  backgroundColor: msg.sender === 'user' ? '#007bff' : '#e5e5ea',
-                  color: msg.sender === 'user' ? '#fff' : '#000',
-                  maxWidth: '70%',
-                  wordWrap: 'break-word',
-                }}
-              >
-                {msg.text}
-              </span>
+              {msg.text}
             </div>
-          ))}
-          <div ref={messagesEndRef} />
+          </div>
+        ))}
+
+        <div ref={messagesEndRef} />
+
+        {/* Suggestion cards (static UI, no logic impact) */}
+        <div className="pt-4">
+          <p className="text-sm text-slate-600 mb-3">Try asking about:</p>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              'Calculate Tax',
+              'Retirement Plan',
+              'Investment Advice',
+              'Tax Deductions',
+            ].map(label => (
+              <div
+                key={label}
+                className="border border-slate-200 rounded-xl p-4 text-center text-sm font-medium text-slate-700 hover:border-blue-500 hover:text-blue-600 transition cursor-pointer bg-white"
+              >
+                {label}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Input */}
+      <div className="border-t border-slate-200 px-6 py-4 bg-slate-50">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={handleKeyPress}
+            placeholder="Ask about taxes, retirement, investments..."
+            className="flex-1 rounded-lg border border-slate-300 px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+
+
+          <button onClick={handleSend} className="rounded-lg border border-black bg-white px-4 py-2 text-black hover:bg-slate-100 transition">
+            <Mic className="w-6 h-6 text-black-600" />
+          </button>
+          
+              
+          <button onClick={handleSend} className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
+            ➤
+          </button>
         </div>
 
-        {/* Input box */}
-        <input
-          type="text"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={handleKeyPress}
-          placeholder="Type a message..."
-          style={{
-            width: '100%',
-            padding: 10,
-            borderRadius: 8,
-            border: '1px solid #ccc',
-            marginBottom: 5,
-          }}
-        />
-
-        {/* Send button */}
-        <button
-          onClick={handleSend}
-          style={{
-            width: '100%',
-            padding: 10,
-            borderRadius: 8,
-            border: 'none',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            cursor: 'pointer',
-          }}
-        >
-          Send
-        </button>
+        <p className="mt-2 text-xs text-slate-500">
+          💡 This is a demo with mock calculations and under testing. Consult with a certified financial advisor.
+        </p>
       </div>
     </div>
-  )
+  </div>
+);
+
 }
 
 
